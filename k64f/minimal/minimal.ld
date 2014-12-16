@@ -10,10 +10,19 @@ SECTIONS
 {
 	.text :
 	{
+		/* interrupt vector table */
 		KEEP(*(.vtor))
+
+		/* reserve memory for K64F security fuses */
+		. = 0x400;
+		KEEP(*(.nv_config))
+		. = 0x410;
+
+		/* rest of code & const data */
 		*(.text*)
 		*(.rodata*)
-	} >FLASH
+
+	} >FLASH = 0xFF
 
 	.bss :
 	{
