@@ -1,0 +1,16 @@
+define __SCRIPT_FLASH
+	h
+	loadbin $(PROJECT).bin 0
+	r
+	g
+	q
+endef
+export __SCRIPT_FLASH
+
+define __SCRIPT_RESET
+	h
+	r
+	g
+	q
+endef
+export __SCRIPT_RESET
