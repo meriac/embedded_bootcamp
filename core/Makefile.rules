@@ -31,11 +31,7 @@ SYSTEM:=$(CORE)/system
 LIB:=$(CORE)/lib
 SYSLIBS:=-lgcc -lc -lnosys
 DEVICE:=$(CORE)/arch/$(ARCH)
-SOURCES:=$(SYSTEM)/src/isr.c \
-         $(SYSTEM)/src/stdlib.c \
-         $(LIB)/printf/tfp_printf.c \
-         $(DEVICE)/src/system.c \
-         $(APP_SRC)
+SOURCES:=$(APP_SRC)
 
 DEBUG_HOST:=localhost:2331
 OPT:=-Os
