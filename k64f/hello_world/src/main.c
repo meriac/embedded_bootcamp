@@ -1,5 +1,5 @@
 #include <stdint.h>
 
-void main_entry(void)
+void reset_handler(void)
 {
 }
