@@ -1,5 +1,7 @@
 #include <bootcamp.h>
+#include "isr.h"
 
-void reset_handler(void)
+void main_entry(void)
 {
+	while(1);
 }

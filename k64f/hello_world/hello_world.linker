@@ -10,7 +10,7 @@ SECTIONS
 {
 	.text :
 	{
-		*(.vtor)
+		KEEP(*(.vtor))
 		*(.text*)
 		*(.rodata*)
 	} >FLASH
