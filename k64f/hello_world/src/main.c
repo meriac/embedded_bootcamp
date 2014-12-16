@@ -1,4 +1,4 @@
-#include <uvisor.h>
+#include <stdint.h>
 
 void main_entry(void)
 {

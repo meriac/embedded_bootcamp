@@ -66,7 +66,6 @@ CFLAGS_PRE:=\
         -DPROGRAM_VERSION=$(PROGRAM_VERSION) \
         -DCPU=$(CPU) \
         $(APP_CFLAGS) \
-        -include $(MEM_CONFIG) \
         -I$(CORE) \
         -I$(CORE)/cmsis/inc \
         -I$(SYSTEM)/inc \
@@ -88,15 +87,12 @@ include $(CORE)/Makefile.scripts
 
 all: $(PROJECT).bin
 
-$(PROJECT).elf: $(OBJS) $(PROJECT).linker
+$(PROJECT).elf: $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(SYSLIBS)
 	$(OBJDUMP) -d $@ > $(PROJECT).asm
 
 $(PROJECT).bin: $(PROJECT).elf
 	$(OBJCOPY) $< -O binary $@
-
-$(PROJECT).linker: $(MEM_CONFIG) $(CORE)/linker/default.h
-	$(CPP) -w -P -I$(CORE) $(APP_CFLAGS) -D$(CPU) -D$(ARCH) -include $^ -o $@
 
 swo:
 	$(JLINK_VIEWER) $(JLINK_PARAM) $(APP_JLINK_PARAM) -itmmask $(JLINK_VIEWER_MASK) $(JLINK_SWO_PARAM)
@@ -128,5 +124,5 @@ reset:
 	@echo "$$__SCRIPT_RESET" | $(JLINK) $(JLINK_PARAM) $(APP_JLINK_PARAM)
 
 clean:
-	rm -f $(PROJECT).map $(PROJECT).elf $(PROJECT).bin $(PROJECT).asm  $(PROJECT).linker gdb.script source.c.tags JLink.log $(APP_CLEAN)
+	rm -f $(PROJECT).map $(PROJECT).elf $(PROJECT).bin $(PROJECT).asm gdb.script source.c.tags JLink.log $(APP_CLEAN)
 	find . $(CORE) -iname '*.o' -exec rm -f \{\} \;
