@@ -47,9 +47,9 @@ ifeq ("$(PROGRAM_VERSION)","")
          PROGRAM_VERSION:='unknown'
 endif
 
-FLAGS_CM3:=-mcpu=cortex-m3 -mthumb
+FLAGS_CORTEX:=-mcpu=cortex-m4 -mthumb
 
-LDFLAGS:=$(FLAGS_CM3) \
+LDFLAGS:=$(FLAGS_CORTEX) \
         -T$(PROJECT).linker \
         -nostartfiles \
         -nostdlib \
@@ -75,7 +75,7 @@ CFLAGS_PRE:=\
         -fdata-sections \
         -fno-common
 
-CFLAGS:=$(FLAGS_CM3) $(CFLAGS_PRE)
+CFLAGS:=$(FLAGS_CORTEX) $(CFLAGS_PRE)
 CPPFLAGS:=$(CFLAGS) -fno-exceptions
 
 OBJS:=$(SOURCES:.cpp=.o)
