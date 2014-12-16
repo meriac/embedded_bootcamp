@@ -1,4 +1,4 @@
-#include <stdint.h>
+#include <bootcamp.h>
 
 void reset_handler(void)
 {
