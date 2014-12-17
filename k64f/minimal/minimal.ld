@@ -16,13 +16,14 @@ SECTIONS
 		/* reserve memory for K64F security fuses */
 		. = 0x400;
 		KEEP(*(.nv_config))
+		FILL(0xFF)
 		. = 0x410;
+		FILL(0x00)
 
 		/* rest of code & const data */
 		*(.text*)
 		*(.rodata*)
-
-	} >FLASH = 0xFF
+	} >FLASH
 
 	.bss :
 	{
