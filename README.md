@@ -1,5 +1,7 @@
 # Embedded Bootcamp 16th-17th December #
 
+Please use the [introductionary example](k64f/minimal) as a template for new software.
+
 ## Further Reading ##
 * [ARM v7-M Architecture Reference Manual](https://web.eecs.umich.edu/~prabal/teaching/eecs373-f10/readings/ARMv7-M_ARM.pdf):
   * p434 : Interrupt Vector Table Layout (Reset Vector, Stack Pointer Initialization)
