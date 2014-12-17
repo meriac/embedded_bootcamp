@@ -1,6 +1,18 @@
-# Embedded Bootcamp 16th-17th December #
+# Baremetal-Programming Bootcamp 16th-17th December #
 
-Please use the [introductionary example](k64f/minimal) as a template for new software.
+A single plain C file is sufficient to express an embedded program.
+
+As the Cortex-M architecture is designed with C-Code in mind, no assembly level bringup code is required. The projects in this repository show how to program C code on top of a bare metal CPU without an operating system or support libraries like libc.
+
+The purpose of this course is to lay out the programming methods for talking to hardware in a minimal configuration. Our target is a better understanding of interaction with low level hardware and toolchains for embedded systems.
+
+## Usage Example ##
+The example below (see [source code](k64f/lesson1-blinky)) will blink the RGB led alternating between red and blue.
+```bash
+cd k64f/lesson1-blinky
+make clean flash
+```
+
 
 ## Further Reading ##
 * [ARM v7-M Architecture Reference Manual](https://web.eecs.umich.edu/~prabal/teaching/eecs373-f10/readings/ARMv7-M_ARM.pdf):

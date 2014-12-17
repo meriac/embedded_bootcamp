@@ -16,9 +16,9 @@ void OnReset(void)
 	/* enable output for PORTB pin 21/22 */
 	PTB->PDDR |= (1UL << 21) | (1UL << 22);
 	/* set PORTB pin 21 */
-	PTB->PSOR |= (1UL << 21);
+	PTB->PSOR = 1UL << 21;
 	/* clear PORTB pin 22 */
-	PTB->PCOR |= (1UL << 22);
+	PTB->PCOR = 1UL << 22;
 
 	/* blink red & blue LED alternating */
 	while(1)

@@ -17,7 +17,7 @@ void DefaultHandler(void)
 	while(1);
 }
 
-void MainLoop(void)
+static void MainLoop(void)
 {
 	volatile int i;
 
