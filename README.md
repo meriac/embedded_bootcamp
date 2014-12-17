@@ -1,6 +1,6 @@
 # Embedded Bootcamp 16th-17th December #
 
-Please use the [introductionary example](k64f/lesson1-blinky) as a template for new software.
+The project in this repository show how to program C code on top of the bare metal CPU without an operating system or a libc library initialized. Please use the [introductionary example](k64f/lesson1-blinky) as a template for new software.
 
 ## Further Reading ##
 * [ARM v7-M Architecture Reference Manual](https://web.eecs.umich.edu/~prabal/teaching/eecs373-f10/readings/ARMv7-M_ARM.pdf):
