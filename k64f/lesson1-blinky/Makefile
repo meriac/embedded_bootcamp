@@ -14,7 +14,7 @@ JLINK_PARAM:=-Device $(CPU) -if SWD
 
 # gcc & ld compiler flags
 FLAGS:=-mcpu=cortex-m4 -mthumb
-CFLAGS:=$(FLAGS) -Iinc -fno-common -Os -g3 -Wall -Werror
+CFLAGS:=$(FLAGS) -I../includes -fno-common -Os -g3 -Wall -Werror
 LDFLAGS:=$(FLAGS) -T$(PROJECT).ld -nostartfiles -nostdlib -lnosys
 
 include Makefile.scripts
