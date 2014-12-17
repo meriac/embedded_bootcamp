@@ -24,7 +24,7 @@ static void TimerInterrupt(void)
 
 static void InitHardware(void)
 {
-	/* enable clock for PORTB & LPTMR */
+	/* enable clocks for PORTB & LPTMR */
 	SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK | SIM_SCGC5_LPTMR_MASK;
 
 	/* set PORTB pin 22 to ALT1 function (GPIO) */
