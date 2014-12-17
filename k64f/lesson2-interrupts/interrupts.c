@@ -45,7 +45,8 @@ static void InitHardware(void)
 	/* run timer */
 	LPTMR0->CSR|= LPTMR_CSR_TEN_MASK;
 
-	/* sleep forever */
+	/* sleep between interrupts & after IRQ return */
+	SCB->SCR = SCB_SCR_SLEEPDEEP_Msk | SCB_SCR_SLEEPONEXIT_Msk;
 	while(1)
 		__WFI();
 }
