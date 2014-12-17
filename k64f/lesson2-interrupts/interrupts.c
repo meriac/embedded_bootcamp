@@ -10,32 +10,49 @@ extern const uint32_t StackTop;
 /* actual vector table in RAM */
 typedef void (*TIsrVector)(void);
 __attribute__ ((aligned(128)))
-TIsrVector g_isr_vector[MAX_ISR_VECTORS];
+volatile TIsrVector g_isr_vector[MAX_ISR_VECTORS];
 
-void DefaultHandler(void)
+static void TimerInterrupt(void)
 {
-	while(1);
+	/* toggle PORTB 22 ... */
+	PTB->PTOR = (1UL << 22);
+
+	/* acknowledge IRQ and wait for TCF to vanish */
+	LPTMR0->CSR |= LPTMR_CSR_TCF_MASK;
+	while(LPTMR0->CSR & LPTMR_CSR_TCF_MASK);
 }
 
-static void MainLoop(void)
+static void InitHardware(void)
 {
-	volatile int i;
+	/* enable clock for PORTB & LPTMR */
+	SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK | SIM_SCGC5_LPTMR_MASK;
 
-	/* enable clock for PORTB */
-	SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK;
 	/* set PORTB pin 22 to ALT1 function (GPIO) */
 	PORTB->PCR[22] = PORT_PCR_MUX(1)|PORT_PCR_DSE_MASK;
 	/* enable output for PORTB pin 22 */
 	PTB->PDDR |= (1UL << 22);
+	/* clear PORTB pin 22 */
+	PTB->PCOR = 1UL << 22;
 
-	/* blink red & blue LED alternating */
+	/* reset pending interrupts & enable timer IRQ, disable timer */
+	LPTMR0->CSR = LPTMR_CSR_TCF_MASK | LPTMR_CSR_TIE_MASK;
+	LPTMR0->PSR = LPTMR_PSR_PBYP_MASK | LPTMR_PSR_PCS(1);
+	/* trigger interrupt every 500ms */
+	LPTMR0->CMR = 500;
+	/* update interrupt vector & enable NVIC entry */
+	ISR_SET(LPTimer_IRQn, TimerInterrupt);
+	NVIC_EnableIRQ(LPTimer_IRQn);
+	/* run timer */
+	LPTMR0->CSR|= LPTMR_CSR_TEN_MASK;
+
+	/* sleep forever */
 	while(1)
-	{
-		/* toggle PORTB 22 ... */
-		PTB->PTOR = (1UL << 22);
-		/* ... and wait */
-		for(i=0; i<1000000; i++);
-	}
+		__WFI();
+}
+
+static void DefaultHandler(void)
+{
+	while(1);
 }
 
 /* reset function */
@@ -43,10 +60,13 @@ void OnReset(void)
 {
 	int i;
 
+	/* setup new vector table in SRAM */
 	for(i=0; i<MAX_ISR_VECTORS; i++)
 		g_isr_vector[i] = DefaultHandler;
+	/* update vector table pointer to new table */
+	SCB->VTOR = (uint32_t)&g_isr_vector;
 
-	MainLoop();
+	InitHardware();
 }
 
 /* declare vector table */
