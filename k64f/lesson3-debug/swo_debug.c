@@ -57,7 +57,7 @@ void OnReset(void)
 	n = 0;
 	while(1)
 	{
-		PrintHex(n);
+		PrintHex(n++);
 		PrintStr(": Hello World!\n\r");
 	}
 }

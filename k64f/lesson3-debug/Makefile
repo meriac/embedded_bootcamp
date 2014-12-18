@@ -10,6 +10,8 @@ OBJCOPY:=$(TOOLCHAIN)objcopy
 
 # debug settings
 JLINK:=$(SEGGER)JLinkExe
+JLINK_VIEWER:=$(SEGGER)JLinkSWOViewer
+JLINK_VIEWER_MASK:=0x7
 JLINK_PARAM:=-Device $(CPU) -if SWD
 
 # gcc & ld compiler flags
@@ -30,6 +32,9 @@ $(PROJECT).elf: $(PROJECT).o
 
 flash: $(PROJECT).bin
 	@echo "$$__SCRIPT_FLASH" | $(JLINK) $(JLINK_PARAM)
+
+swo: flash
+	$(JLINK_VIEWER) $(JLINK_PARAM) -itmmask $(JLINK_VIEWER_MASK) $(JLINK_SWO_PARAM)
 
 reset:
 	@echo "$$__SCRIPT_RESET" | $(JLINK) $(JLINK_PARAM)
