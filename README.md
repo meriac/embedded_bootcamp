@@ -15,8 +15,13 @@ The purpose of this course is to lay out the programming methods for talking to 
 ## Usage Example ##
 The example below (see [source code](k64f/lesson1-blinky)) will blink the RGB led alternating between red and blue.
 ```bash
+# simple example
 cd k64f/lesson1-blinky
 make clean flash
+
+# debug example
+cd k64f/lesson4-debug-printf
+make clean swo
 ```
 
 
