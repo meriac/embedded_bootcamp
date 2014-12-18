@@ -14,26 +14,21 @@ static void PrintChr(char data)
 	ITM->PORT[CHANNEL_DEBUG].u8 = (uint8_t)data;
 }
 
-/* convert number to hex character */
-static char HexChar(uint8_t data)
+/* print number as decimal ASCII string */
+void PrintNum(uint32_t num)
 {
-	return (data<0xA) ? (data+'0') : (data+'A'-0xA);
+	char digit;
+
+	digit = '0' + (num % 10);
+
+	num /= 10;
+	if(num)
+		PrintNum(num);
+
+	PrintChr(digit);
 }
 
-static void PrintHexByte(uint8_t num)
-{
-	PrintChr(HexChar(num >>  4));
-	PrintChr(HexChar(num & 0xF));
-}
-
-void PrintHex(uint32_t num)
-{
-	PrintHexByte((uint8_t)(num >> 24));
-	PrintHexByte((uint8_t)(num >> 16));
-	PrintHexByte((uint8_t)(num >>  8));
-	PrintHexByte((uint8_t)(num >>  0));
-}
-
+/* print ASCII string */
 void PrintStr(const char* str)
 {
 	char c;
@@ -57,7 +52,7 @@ void OnReset(void)
 	n = 0;
 	while(1)
 	{
-		PrintHex(n++);
+		PrintNum(n++);
 		PrintStr(": Hello World!\n\r");
 	}
 }
