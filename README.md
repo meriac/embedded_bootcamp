@@ -6,6 +6,12 @@ As the Cortex-M architecture is designed with C-Code in mind, no assembly level 
 
 The purpose of this course is to lay out the programming methods for talking to hardware in a minimal configuration. Our target is a better understanding of interaction with low level hardware and toolchains for embedded systems.
 
+## Lessons ##
+* [Lesson 1](k64f/lesson1-blinky/minimal.c#L27): Blink RGB LED - alternate between red and blue
+* [Lesson 2](k64f/lesson2-interrupts/interrupts.s#L18): Blink red LED using the low power interrupt
+* [Lesson 3](k64f/lesson2-debug/swo_debug.c#L60): Simple SWO printing of "hello world" and a counter using 
+* [Lesson 4](k64f/lesson2-debug-printf/main.c#L33): Advanced SWO printing using printf
+
 ## Usage Example ##
 The example below (see [source code](k64f/lesson1-blinky)) will blink the RGB led alternating between red and blue.
 ```bash
